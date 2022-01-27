@@ -44,11 +44,19 @@ h1 {
 }
 /* site styling */
 
+.asp_refs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .asp_reference_img {
     width:300px;
     height:224px;
     border:1px dotted #DD2955;
-    margin:10px;
 }
 .asp_reference_img:hover{
     border:1px solid #000;
@@ -88,7 +96,7 @@ h1 {
     position: absolute;
     margin: auto;
     margin-top: -10px;
-    margin-left: -52.5px;
+    margin-left: -70px;
     left: 50%;
     width: 140px;
 }
