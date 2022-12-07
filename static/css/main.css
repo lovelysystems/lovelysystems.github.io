@@ -1,18 +1,22 @@
 /* general */
 @font-face {
   font-family: MetaSerifScWeb-Book;
+  font-display: swap;
   src: url("fonts/ff-meta-serif-web-book/MetaSerifComp-Medium.eot");
 }
 @font-face {
   font-family: MetaSerifScWeb-Book;
+  font-display: swap;
   src: url("fonts/ff-meta-serif-web-book/MetaSerifWeb-Book.woff") format("woff");
 }
 @font-face {
   font-family: MetaWeb-Medium;
+  font-display: swap;
   src: url("fonts/ff-meta-web-medium/MetaScWeb-Medium.eot");
 }
 @font-face {
   font-family: MetaWeb-Medium;
+  font-display: swap;
   src: url("fonts/ff-meta-web-medium/MetaWeb-Medium.woff") format("woff");
 }
 body {
