@@ -28,27 +28,6 @@
 </head>
 <body>
 
-
-<script type="text/javascript">
-  var setLang = function(lang) {
-    try {
-      localStorage.setItem('lang', lang)
-    } catch (e) {}
-  }
-
-  try {
-    var lang = localStorage['lang'];
-    if (!lang) {
-      lang = navigator.language || navigator.userLanguage;
-      localStorage.setItem('lang', lang);
-    }
-    if (lang && lang.indexOf('de') === 0) {
-      window.location.href = '/de';
-    }
-  } catch (e) {
-    console.log(e);
-  }
-</script>
 <div class="container">
   <div class="switch_lang">
     <a href="/de"
