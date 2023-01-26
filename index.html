@@ -25,36 +25,8 @@
 </head>
 <body>
 
-
-<script type="text/javascript">
-  var setLang = function(lang) {
-    try {
-      localStorage.setItem('lang', lang)
-    } catch (e) {}
-  }
-
-  try {
-    var lang = localStorage['lang'];
-    if (!lang) {
-      lang = navigator.language || navigator.userLanguage;
-      localStorage.setItem('lang', lang);
-    }
-    if (lang && lang.indexOf('de') === 0) {
-      window.location.href = '/de';
-    }
-  } catch (e) {
-    console.log(e);
-  }
-</script>
 <div class="container">
-  <div class="switch_lang">
-    <a href="/de"
-       class="lang_select"
-       id="en"
-       onclick="setLang('de')">
-      Deutsch
-    </a>
-  </div>  <div class="text-center ls-logo">
+  <div class="text-center ls-logo">
     <img src="/static/images/lovelysystems_logo--hires.jpg" alt="Lovely Systems" title="Lovely Systems" width="100" height="100" />
   </div>
   <h1 class="text-center ls-headline">
@@ -69,10 +41,11 @@
       <p>Our customers value our competence, our commitment and our solution-oriented way of doing things.</p>
     </div>
     <div class="col-sm-4 col-xs-12 text-center">
-      <p>Our employees are agile, located in Dornbirn and develop world-class software.</p>
+      <p>Additionally to developing platforms, we are also responsible for their technical operation - 24/7.</p>
     </div>
   </div>
 
+  <!--
   <div class="ls-divider"><span>OH, WE'RE HIRING!</span><hr/></div>
   <div class="text-center">
     <a href="https://join.com/companies/lovelysystems/5219015-senior-backend-developer-kotlin" target="_blank" rel="noopener noreferrer">Senior Backend Developer (Kotlin)</a>
@@ -80,121 +53,47 @@
   <div class="text-center">
     <a href="https://join.com/companies/lovelysystems/5219028-senior-web-developer-typescript" target="_blank" rel="noopener noreferrer">Senior Web Developer (TypeScript)</a>
   </div>
+  -->
 
-  <div class="ls-divider"><span>OUR WORK</span><hr/></div>
+  <div class="ls-divider"><span>CASE STUDIES</span><hr/></div>
   <div class="text-center">
 
-    <div class="ls-box text-center">
-        <p class="ls-box">These platforms were developed by Lovely Systems and we are responsible for their technical operation – 24/7. </p>
+    <div class="ls-cases">
+      <a aria-label="Cross-Media Platform for Online News, Radio, and TV" class="ls-cases__teaser" href="/posts/cross-media-platform-for-online-news-radio-and-tv/">
+        <article>
+          <img
+            src="/posts/cross-media-platform-for-online-news-radio-and-tv/teaser.jpg"
+            alt="Cross-Media Platform for Online News, Radio, and TV"
+            aria-label="Cross-Media Platform for Online News, Radio, and TV"
+            width="1850"
+            height="818"
+          >
+        </article>
+      </a>
+      <a aria-label="oneplus: The Best Streaming Platform in Switzerland" class="ls-cases__teaser" href="/posts/oneplus-streaming-platform-for-switzerland/">
+        <article>
+          <img
+            src="/posts/oneplus-streaming-platform-for-switzerland/teaser.jpg"
+            alt="oneplus: The Best Streaming Platform in Switzerland"
+            aria-label="oneplus: The Best Streaming Platform in Switzerland"
+            width="1850"
+            height="818"
+          >
+        </article>
+      </a>
+      <a aria-label="Gantner Instruments: Use Case Tailored Big Data Solutions" class="ls-cases__teaser" href="/posts/use-case-tailored-big-data-solutions/">
+        <article>
+          <img
+            src="/posts/use-case-tailored-big-data-solutions/teaser.jpg"
+            alt="Gantner Instruments: Use Case Tailored Big Data Solutions"
+            aria-label="Gantner Instruments: Use Case Tailored Big Data Solutions"
+            width="1850"
+            height="818"
+          >
+        </article>
+      </a>
     </div>
-    <div class="asp_refs">
-      <a href="https://www.zueritoday.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/zueritoday--hires.jpg"
-        class="asp_reference_img"
-        alt="ZüriToday" title="ZüriToday"/>
-      </a>
-      <a href="https://www.oneplus.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/oneplus--hires.jpg"
-        class="asp_reference_img"
-        alt="oneplus" title="oneplus"/>
-      </a>
-      <a href="https://www.fm1today.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/fm1today--hires.jpg"
-        class="asp_reference_img"
-        alt="FM1Today" title="FM1Today"/>
-      </a>
-      <a href="https://www.flashbackfm.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/flashbackfm.jpg"
-            class="asp_reference_img"
-            alt="FLASHBACK FM" title="FLASHBACK FM"/>
-      </a>
-      <a href="https://www.radiofm1.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/radiofm1--hires.jpg"
-            class="asp_reference_img"
-            alt="Radio FM1" title="Radio FM1"/>
-      </a>
-      <a href="https://www.radiomelody.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/radiomelody--hires.jpg"
-            class="asp_reference_img"
-            alt="Radio Melody" title="Radio Melody"/>
-      </a>
-      <a href="https://www.radio24.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/radio24--hires.jpg"
-            class="asp_reference_img"
-            alt="Radio 24" title="Radio 24"/>
-      </a>
-      <a href="https://www.pilatustoday.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/pilatustoday--hires.jpg"
-            class="asp_reference_img"
-            alt="PilatusToday" title="PilatusToday"/>
-      </a>
-      <a href="https://www.radiopilatus.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/radiopilatus--hires.jpg"
-            class="asp_reference_img"
-            alt="Radio Pilatus" title="Radio Pilatus"/>
-      </a>
 
-      <a href="https://www.radio32.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/radio32--hires.jpg"
-            class="asp_reference_img"
-            alt="Radio 32" title="Radio 32"/>
-      </a>
-      <a href="https://www.argoviatoday.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/argoviatoday--hires.jpg"
-            class="asp_reference_img"
-            alt="ArgoviaToday" title="ArgoviaToday"/>
-      </a>
-      <a href="https://radio.argovia.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/argovia--hires.jpg"
-            class="asp_reference_img"
-            alt="Radio Argovia" title="Radio Argovia"/>
-      </a>
-      <a href="https://www.virginradiorock.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/virginrock--hires.jpg"
-            class="asp_reference_img"
-            alt="Radio Virgin Radio Rock" title="Radio Virgin Radio Rock"/>
-      </a>
-      <a href="https://www.telebaern.tv/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/telebaern--hires.jpg"
-            class="asp_reference_img"
-            alt="Tele Bärn" title="Tele Bärn"/>
-      </a>
-      <a href="https://www.telem1.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/telem1--hires.jpg"
-            class="asp_reference_img"
-            alt="Tele M1" title="Tele M1"/>
-      </a>
-      <a href="https://www.telezueri.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/telezueri--hires.jpg"
-            class="asp_reference_img"
-            alt="Tele Züri" title="Tele Züri"/>
-      </a>
-      <a href="https://www.amtliche-nachrichten.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/amna--hires.jpg"
-            class="asp_reference_img"
-            alt="Amtliche Nachrichten" title="Amtliche Nachrichten"/>
-      </a>
-      <a href="https://www.petitio.ch/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/petitio--hires.jpg"
-            class="asp_reference_img"
-            alt="Petitio" title="Petitio"/>
-      </a>
-      <a href="https://www.gantner-instruments.com/products/software/gi-cloud/" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/gicloud--hires.jpg"
-            class="asp_reference_img"
-            alt="Gantner Instruments GI Cloud" title="Gantner Instruments GI Cloud"/>
-      </a>
-      <a href="https://www.avadolech.com" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/avado-lech--hires.jpg"
-            class="asp_reference_img"
-            alt="Avado Lech" title="Avado Lech"/>
-      </a>
-      <a href="https://www.skala-campus.org" target="_blank" rel="noopener noreferrer">
-        <img src="/static/images/asp/skala--hires.jpg"
-            class="asp_reference_img"
-            alt="Skala campus" title="Skala Campus"/>
-      </a>
-    </div>
   </div>
 
 
