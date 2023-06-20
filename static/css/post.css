@@ -52,3 +52,14 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+.contact-card img {
+  width: 72px;
+  height: 72px;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
