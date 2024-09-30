@@ -99,20 +99,13 @@ h1 {
     background: white;
     position: absolute;
     margin: auto;
-    margin-top: -10px;
-    margin-left: -70px;
+    min-width: 140px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    padding-left: 10px;
+    padding-right: 10px;
+    transform: translateX(-50%) translateY(-10px);
     left: 50%;
-    width: 140px;
-}
-.ie .ls-divider span {
-    left: 50%;
-}
-.ie7 .ls-divider span {
-    margin-top: 15px;
-}
-.ls-divider .technology {
-    width: 190px;
-    margin-left: -95px;
 }
 .ls-divider .blog {
     width: 120px;
@@ -121,10 +114,6 @@ h1 {
 .ls-divider .team {
     width: 60px;
     margin-left: -30px;
-}
-.ls-divider .contact {
-    width: 80px;
-    margin-left: -40px;
 }
 .ls-divider HR {
     border-width: 2px 0px;
