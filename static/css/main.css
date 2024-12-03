@@ -46,6 +46,29 @@ h1 {
     font-size: 54.5px;
     font-weight: lighter;
 }
+
+/* Text gradients */
+
+:root {
+    --yellow-color: #F5C236;
+    --lightblue-color: #038796;
+    --violet-color: #7E50CE;
+}
+
+.text-yellow-gradient {
+    display: inline-block;
+    background: -webkit-linear-gradient(0deg, var(--violet-color), var(--yellow-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-blue-gradient {
+    display: inline-block;
+    background: -webkit-linear-gradient(0deg, var(--lightblue-color), var(--violet-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 /* site styling */
 
 .asp_refs {
@@ -394,4 +417,41 @@ HR {
     max-width: 100%;
     height: auto;
     border: 1px solid #000 !important;
+}
+
+.streaming-teaser {
+    background-image: url('../images/background-teaser.png');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    text-decoration: none;
+    padding: 45px 0;
+
+    h3 {
+        font-size: 96px;
+        font-weight: bold;
+        line-height: 120%;
+        color: #fff;
+
+        span {
+            font-size: 96px;
+            font-weight: bold;
+            line-height: 120%;
+        }
+    }
+
+    .streaming-info {
+        text-align: right;
+        padding-right: 100px;
+        padding-top: 50px;
+
+        span {
+            display: block;
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 120%;
+            padding-bottom: 10px;
+            color: #fff;
+        }
+    }
 }
