@@ -19,6 +19,7 @@
   font-display: swap;
   src: url("fonts/ff-meta-web-medium/MetaWeb-Medium.woff") format("woff");
 }
+
 body {
     font-family: MetaSerifScWeb-Book, serif;
     font-size: 16px;
@@ -48,7 +49,6 @@ h1 {
 }
 
 /* Text gradients */
-
 :root {
     --yellow-color: #F5C236;
     --lightblue-color: #038796; 
@@ -372,7 +372,6 @@ HR {
 
 .row {
     margin-left: -15px;
-    *zoom: 1;
 }
 .ls-tweet-container {
     margin: 4px 8px 0 0;
@@ -420,21 +419,23 @@ HR {
 }
 
 .streaming-teaser {
-    background-image: url('../images/background-teaser.png');
+    font-family: 'Jost', sans-serif;
+    background-color: #000;
+    background-image: url('../images/background-teaser.jpg');
     background-repeat: no-repeat;
     background-position: center top;
     background-size: cover;
-    padding: 45px 0;
+    padding: 45px;
     margin-top: 30px;
 
-    &:hover {
+    a {
         text-decoration: none;
     }
 
     h3 {
         font-size: 96px;
         font-weight: bold;
-        text-align: center;
+        text-align: left;
         line-height: 120%;
         color: #fff;
 
@@ -447,7 +448,6 @@ HR {
 
     .streaming-info {
         text-align: right;
-        padding-right: 100px;
         padding-top: 50px;
 
         span {
