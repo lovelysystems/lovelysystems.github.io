@@ -2,14 +2,10 @@
 
 This repository contains the website of Lovely Systems.
 
-## How To: Add Platform
+## Development
 
-1. Make a screenshot of the site in Chrome's "iPad Air" (landscape).
-2. Resize and optimize the image running this command (change file names as required):
+You need to statically serve the files in this folder, e.g. with Node.js
+installed you can run `npx serve .`.
 
-```sh
-convert input_ipad.png -resize 600 -quality 80% output.jpg
-```
-
-3. Copy the output JPG to `/static/images/asp`.
-4. Add platform in `index.html` and `de.html`.
+To change the API URL, you need to change the configuration in index.html;
+search for `API_URL`.

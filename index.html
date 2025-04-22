@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Lovely Systems</title>
+  <meta name="description" content="Chat with Lovely Systems">
+  <meta name="keywords" content="lovely, systems, chat, ai, chatbot">
+  <meta name="author" content="The lovely folks at ♥ly">
+  <meta name="theme-color" content="#FF1948">
+  <link rel="icon" href="/static/logo.png" type="image/png" />
+  <style>
+    @font-face {
+      font-display: swap;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      src: url('/static/fonts/inter-regular.woff2') format('woff2');
+    }
+
+    @font-face {
+      font-display: swap;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 600;
+      src: url('/static/fonts/inter-semibold.woff2') format('woff2');
+    }
+  </style>
+  <style>
+    :root {
+      --lovely-red: #FF1948;
+      --lovely-black: #282828;
+      --lovely-white: #FFF;
+      --background-color: var(--lovely-red);
+      --text-color: var(--lovely-white);
+
+      --padding: 16px;
+      --font-size: 46px;
+      /* according to the design */
+      --font-size: 32px;
+      /* because the design is too big */
+    }
+
+    @media screen and (min-width: 768px) {
+      :root {
+        --padding: 40px;
+        --font-size: 96px;
+        /* according to the design */
+        --font-size: 64px;
+        /* because the design is too big */
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      font-family: Inter, sans-serif;
+      font-feature-settings: "ss02" on;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      overflow-wrap: break-word;
+      width: 100dvw;
+      height: 100dvh;
+
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    p {
+      font-size: var(--font-size);
+      font-weight: 600;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .message a {
+      opacity: 0.7;
+      /* 0.5 as per the design is too low */
+    }
+
+    .user-message {
+      padding-block: var(--padding);
+      position: sticky;
+      top: calc(-1 * var(--padding));
+      background-color: var(--background-color);
+      container-type: scroll-state;
+      z-index: 1;
+    }
+
+    .user-message-text {
+      display: inline-block;
+      background-color: var(--text-color);
+      border: 2px solid currentColor;
+      color: var(--background-color);
+      padding: 10px 16px;
+      font-size: 20px;
+      font-weight: 600;
+      border-radius: 70px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    /* note: as of 2025-04 this only works in chromium-based browsers */
+    @container scroll-state(stuck: top) {
+      .user-message-text {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        width: 100%;
+      }
+    }
+
+    #chat-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--padding);
+    }
+
+    #prompt-container {
+      background-color: var(--background-color);
+      position: sticky;
+      bottom: 0;
+      width: 100%;
+      padding: var(--padding);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    #input-wrapper {
+      display: flex;
+      align-items: center;
+
+
+      position: relative;
+      color: var(--lovely-black);
+      background-color: var(--lovely-white);
+      border: 2px solid currentColor;
+    }
+
+    input[type="text"] {
+      font: inherit;
+      font-size: 16px;
+      line-height: 100%;
+      color: inherit;
+      outline: none;
+      border-radius: 0;
+      flex-grow: 1;
+      padding: 10px;
+      padding-right: 0;
+      /* the icon-button takes care of padding */
+
+      &::placeholder {
+        color: var(--lovely-black);
+        opacity: 0.5;
+      }
+    }
+
+    #send-button {
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      padding-inline: 10px;
+    }
+
+    #predefined-prompts {
+      display: flex;
+      gap: 12px;
+      margin-inline: calc(-1 * var(--padding));
+      padding-inline: var(--padding);
+      overflow-x: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    button {
+      appearance: none;
+      color: inherit;
+      font: inherit;
+      background-color: transparent;
+    }
+
+    button:not([type="submit"]),
+    .button {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      color: inherit;
+      border: 2px solid currentColor;
+      border-radius: 70px;
+      font-size: 16px;
+      font-weight: 600;
+      padding-inline: 16px;
+      white-space: nowrap;
+
+      &:has(svg) {
+        padding: 0;
+        width: 40px;
+      }
+    }
+
+    .dot-animation {
+      font-weight: bold;
+      --dot-state: "•◦";
+      animation: switch-dots 500ms infinite steps(2);
+    }
+
+    @keyframes switch-dots {
+      0% {
+        --dot-state: "•◦";
+      }
+
+      50% {
+        --dot-state: "◦•";
+      }
+    }
+
+    .dot-animation::before {
+      content: var(--dot-state);
+    }
+  </style>
+</head>
+<body>
+  <div id="chat-container">
+    <p class="message ai-message">Hi,we’re ♥lovely. We build and operate digital platforms. Let’s chat a bit, shall we?</p>
+  </div>
+  <div id="prompt-container">
+    <div id="predefined-prompts">
+      <button data-prompt="Are you open for business?">Are you open for business?</button>
+      <button data-prompt="">I need your contact details...</button>
+      <a class="button" href="https://github.com/lovelysystems" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" viewBox="0 0 496 512">
+          <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+          <path
+            d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
+        </svg>
+      </a>
+      <a class="button" href="https://www.linkedin.com/company/lovely-systems-gmbh/" target="_blank"
+        rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" viewBox="0 0 448 512">
+          <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+          <path
+            d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z" />
+        </svg>
+      </a>
+    </div>
+    <form id="prompt-form">
+      <div id="input-wrapper">
+        <input type="text" id="message-input" placeholder="Ask us anything ..." autocomplete="off">
+        <button type="submit" id="send-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Lucide Icons © [year] Lucide Contributors / Licensed under the ISC License / https://lucide.dev -->
+            <path
+              d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z" />
+            <path d="M6 12h16" />
+          </svg>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script type="module">
+    import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+
+    // Configuration
+    const C = {
+      // TODO: replace with the real one
+      API_URL: 'https://repinion.florianhaemmerle.com/www-chat',
+    };
+
+    // Special Treatment for Links
+    // - shorten links to LinkedIn where the displayed text is the URL
+    // - open all links in a new tab
+    marked.use({
+      extensions: [
+        {
+          name: 'link',
+          renderer(token) {
+            const text = token.text.replace(/https?:\/\/(www\.linkedin\.com)?/, '');
+            return `<a href="${token.href}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+          },
+        },
+      ],
+    });
+
+    /** @type {HTMLDivElement} */
+    const chatContainer = document.getElementById('chat-container');
+    /** @type {HTMLInputElement} */
+    const messageInput = document.getElementById('message-input');
+    /** @type {HTMLFormElement} */
+    const promptForm = document.getElementById('prompt-form');
+
+    const THREAD = [];
+
+    async function sendMessage() {
+      const message = messageInput.value.trim();
+      if (!message) return;
+
+      const qaElement = document.createElement('section');
+
+      // Add the user's message to the chat
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message', 'user-message');
+      const textElement = document.createElement('div')
+      textElement.classList.add('user-message-text');
+      textElement.textContent = message;
+      messageElement.appendChild(textElement);
+      qaElement.appendChild(messageElement);
+      chatContainer.appendChild(qaElement);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      THREAD.push({ role: 'user', content: message });
+
+      messageInput.value = '';
+
+      // Add a typing indicator
+      const typingIndicator = document.createElement('p');
+      typingIndicator.classList.add('message', 'ai-message', 'dot-animation');
+      qaElement.appendChild(typingIndicator);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      try {
+        // TODO: the backend will need to be aware of the thread
+        // NOTE: at this point, the thread already contains the latest user message
+        console.log(structuredClone(THREAD));
+        const response = await fetch(C.API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ question: message }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        // Remove typing indicator
+        qaElement.removeChild(typingIndicator);
+
+        // Create element for AI response
+        const aiMessageElement = document.createElement('p');
+        aiMessageElement.classList.add('message', 'ai-message');
+        qaElement.appendChild(aiMessageElement);
+
+        // Stay at the top of the answer
+        chatContainer.querySelector('section:last-of-type')?.scrollIntoView({
+          block: 'start',
+          behavior: "instant"
+        });
+
+        // Process the stream
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+
+        let answer = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          // Append new content to the AI message
+          const text = decoder.decode(value);
+          answer += text;
+          aiMessageElement.innerHTML = marked.parse(answer);
+          // keep latest ai-message in view from the start
+          chatContainer.querySelector('section:last-of-type')?.scrollIntoView({
+            block: 'start',
+            behavior: "instant"
+          });
+        }
+
+        THREAD.push({ role: 'assistant', content: answer });
+      } catch (error) {
+        console.error('Error:', error);
+        qaElement.removeChild(typingIndicator);
+        const messageElement = document.createElement('p');
+        messageElement.classList.add('message', 'ai-message');
+        const message = `Sorry, I couldn't process your request. Please try again later.`;
+        messageElement.textContent = message;
+        qaElement.appendChild(messageElement);
+        chatContainer.appendChild(qaElement);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+        THREAD.push({ role: 'assistant', content: message });
+      }
+    }
+
+    document.addEventListener('click', (e) => {
+      // (1) handle clicks on prompt elements
+      const promptElement = e.target.closest('[data-prompt]');
+      if (promptElement) {
+        const prompt = promptElement.dataset.prompt || promptElement.textContent;
+        const messageInput = document.getElementById('message-input');
+        messageInput.value = prompt;
+        promptForm.requestSubmit();
+      }
+    })
+
+    document.addEventListener('DOMContentLoaded', () => {
+      promptForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        sendMessage();
+      });
+    });
+  </script>
+</body>
+</html>
