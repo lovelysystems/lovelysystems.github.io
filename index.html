@@ -75,7 +75,6 @@
       flex-direction: column;
       overflow: hidden;
       text-wrap: balance;
-      text-wrap: pretty;
     }
 
     p {
@@ -229,23 +228,43 @@
     }
 
     @keyframes switch-dots {
-      0% {
-        --dot-state: "•◦";
-      }
-
-      50% {
-        --dot-state: "◦•";
-      }
+      0% { --dot-state: "•◦"; }
+      50% { --dot-state: "◦•"; }
     }
 
     .dot-animation::before {
       content: var(--dot-state);
+    }
+
+    /* easter eggs */
+
+    [data-message*='blink'] { animation: blink 1s infinite; }
+    [data-message*='vibrate'] { animation: vibrate .3s infinite; }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    @keyframes vibrate {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
     }
   </style>
 </head>
 <body>
   <div id="chat-container">
     <p class="message ai-message">Hi,we’re ♥lovely. We build and operate digital platforms. Let’s chat a bit, shall we?</p>
+    <section>
+      <p class="message user-message">
+        <span class="user-message-text">Current News</span>
+      </p>
+      <p class="message ai-message">Meet us at <a href="https://kotlinconf.com/">KotlinConf</a> in Copenhagen: May 22-23</p>
+    </section>
   </div>
   <div id="prompt-container">
     <div id="predefined-prompts">
@@ -268,12 +287,13 @@
         </svg>
         LinkedIn
       </a>
-      <button class="icon-only" data-prompt="Show me your legal information."><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          class="lucide lucide-section-icon lucide-section">
+      <button class="icon-only" data-prompt="Show me your legal information.">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Lucide Icons © [year] Lucide Contributors / Licensed under the ISC License / https://lucide.dev -->
           <path d="M16 5a4 3 0 0 0-8 0c0 4 8 3 8 7a4 3 0 0 1-8 0" />
           <path d="M8 19a4 3 0 0 0 8 0c0-4-8-3-8-7a4 3 0 0 1 8 0" />
-        </svg></button>
+        </svg>
+      </button>
     </div>
     <form id="prompt-form">
       <div id="input-wrapper">
@@ -291,14 +311,22 @@
     </form>
   </div>
 
+  <template id="message-template">
+    <section>
+      <div class="message user-message">
+        <div class="user-message-text"></div>
+      </div>
+      <p class="message ai-message dot-animation"></p>
+      <p class="message ai-message"></p>
+    </section>
+  </template>
+
   <script type="module">
     import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
     // Configuration
-    const C = {
-      // TODO: replace with the real one
-      API_URL: 'https://repinion.florianhaemmerle.com/www-chat',
-    };
+    const C = window.C = window.C || {};
+    C.API_URL = 'https://repinion.florianhaemmerle.com/www-chat';
 
     // Special Treatment for Links
     // - shorten links to LinkedIn where the displayed text is the URL
@@ -321,34 +349,29 @@
     const messageInput = document.getElementById('message-input');
     /** @type {HTMLFormElement} */
     const promptForm = document.getElementById('prompt-form');
+    /** @type {HTMLTemplateElement} */
+    const messageTemplate = document.getElementById('message-template');
 
-    const THREAD = [];
+    const THREAD = window.THREAD = [];
 
     async function sendMessage() {
       const message = messageInput.value.trim();
       if (!message) return;
 
-      const qaElement = document.createElement('section');
+      const messageClone = messageTemplate.content.cloneNode(true);
+      const section = messageClone.querySelector('section');
+      chatContainer.appendChild(section);
 
-      // Add the user's message to the chat
-      const messageElement = document.createElement('div');
-      messageElement.classList.add('message', 'user-message');
-      const textElement = document.createElement('div')
-      textElement.classList.add('user-message-text');
-      textElement.textContent = message;
-      messageElement.appendChild(textElement);
-      qaElement.appendChild(messageElement);
-      chatContainer.appendChild(qaElement);
-      chatContainer.scrollTop = chatContainer.scrollHeight;
+      const userMessage = section.querySelector('.user-message');
+      const userMessageText = section.querySelector('.user-message-text');
+      const typingIndicator = section.querySelector('.dot-animation');
+      const aiMessageElement = section.querySelector('.ai-message:not(.dot-animation)');
 
       THREAD.push({ role: 'user', content: message });
+      userMessageText.textContent = message;
+      section.dataset.message = message;
 
       messageInput.value = '';
-
-      // Add a typing indicator
-      const typingIndicator = document.createElement('p');
-      typingIndicator.classList.add('message', 'ai-message', 'dot-animation');
-      qaElement.appendChild(typingIndicator);
       chatContainer.scrollTop = chatContainer.scrollHeight;
 
       try {
@@ -357,9 +380,7 @@
         console.log(structuredClone(THREAD));
         const response = await fetch(C.API_URL, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json',},
           body: JSON.stringify({ question: message }),
         });
 
@@ -367,13 +388,7 @@
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // Remove typing indicator
-        qaElement.removeChild(typingIndicator);
-
-        // Create element for AI response
-        const aiMessageElement = document.createElement('p');
-        aiMessageElement.classList.add('message', 'ai-message');
-        qaElement.appendChild(aiMessageElement);
+        typingIndicator.remove();
 
         // Stay at the top of the answer
         chatContainer.querySelector('section:last-of-type')?.scrollIntoView({
@@ -405,15 +420,11 @@
         THREAD.push({ role: 'assistant', content: answer });
       } catch (error) {
         console.error('Error:', error);
-        qaElement.removeChild(typingIndicator);
-        const messageElement = document.createElement('p');
-        messageElement.classList.add('message', 'ai-message');
+        typingIndicator.remove();
         const message = `Sorry, I couldn't process your request. Please try again later.`;
-        messageElement.textContent = message;
-        qaElement.appendChild(messageElement);
-        chatContainer.appendChild(qaElement);
-        chatContainer.scrollTop = chatContainer.scrollHeight;
+        aiMessageElement.textContent = message;
         THREAD.push({ role: 'assistant', content: message });
+        chatContainer.scrollTop = chatContainer.scrollHeight;
       }
     }
 
