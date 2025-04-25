@@ -322,7 +322,7 @@
 
     // Configuration
     const C = window.C = window.C || {};
-    C.API_URL = 'https://repinion.florianhaemmerle.com/www-chat';
+    C.API_URL = 'https://website-api.prod.ls-lab.lovelysystems.com/conversations/stream';
 
     // Special Treatment for Links
     // - shorten links to LinkedIn where the displayed text is the URL
@@ -371,13 +371,10 @@
       chatContainer.scrollTop = chatContainer.scrollHeight;
 
       try {
-        // TODO: the backend will need to be aware of the thread
-        // NOTE: at this point, the thread already contains the latest user message
-        console.log(structuredClone(THREAD));
         const response = await fetch(C.API_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json',},
-          body: JSON.stringify({ question: message }),
+          headers: { 'Accept': 'text/event-stream', 'Content-Type': 'application/json',},
+          body: JSON.stringify(THREAD),
         });
 
         if (!response.ok) {
@@ -397,14 +394,23 @@
         const decoder = new TextDecoder();
 
         let answer = '';
+        let buffer = window.buffer = '';
 
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
 
-          // Append new content to the AI message
-          const text = decoder.decode(value);
-          answer += text;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop(); // keep the partial line for next loop
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              const chunk = line.slice(6);
+              answer += chunk;
+            }
+          }
+
           aiMessageElement.innerHTML = marked.parse(answer);
           // keep latest ai-message in view from the start
           chatContainer.querySelector('section:last-of-type')?.scrollIntoView({
