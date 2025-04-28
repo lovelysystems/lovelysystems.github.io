@@ -2,14 +2,21 @@
 
 This repository contains the website of Lovely Systems.
 
-## How To: Add Platform
+## Development
 
-1. Make a screenshot of the site in Chrome's "iPad Air" (landscape).
-2. Resize and optimize the image running this command (change file names as required):
+You need to statically serve the files in this folder, e.g. with Node.js
+installed you can run `npx serve .`.
 
-```sh
-convert input_ipad.png -resize 600 -quality 80% output.jpg
-```
+To change the API URL, you need to change the configuration in index.html;
+search for `API_URL`.
 
-3. Copy the output JPG to `/static/images/asp`.
-4. Add platform in `index.html` and `de.html`.
+## Switch Conversational AI Environment:
+
+Bookmarklets:
+
+- <a href="javascript:(function()%7Bwindow.C.API_URL%20%3D%20'https%3A%2F%2Fwebsite-api.stg.ls-lab.lovelysystems.com%2Fconversations%2Fstream'%3B%7D)()%3B">♥ly Conversational: STG</a>
+- <a href="javascript:(function()%7Bwindow.C.API_URL%20%3D%20'https%3A%2F%2Fwebsite-api.prod.ls-lab.lovelysystems.com%2Fconversations%2Fstream'%3B%7D)()%3B">♥ly Conversational: PROD</a>
+
+## Notes
+
+- `t25.html` is the target location of our 2025 T-Shirt QR Campaign
