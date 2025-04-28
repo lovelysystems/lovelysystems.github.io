@@ -14,8 +14,8 @@ search for `API_URL`.
 
 Bookmarklets:
 
-- <a href="javascript:(function()%7Bwindow.C.API_URL%20%3D%20'https%3A%2F%2Fwebsite-api.stg.ls-lab.lovelysystems.com%2Fconversations%2Fstream'%3B%7D)()%3B">♥ly Conversational: STG</a>
-- <a href="javascript:(function()%7Bwindow.C.API_URL%20%3D%20'https%3A%2F%2Fwebsite-api.prod.ls-lab.lovelysystems.com%2Fconversations%2Fstream'%3B%7D)()%3B">♥ly Conversational: PROD</a>
+- ♥ly Conversational: STG: `javascript:(function()%7Bwindow.C.API_URL%20%3D%20'https%3A%2F%2Fwebsite-api.stg.ls-lab.lovelysystems.com%2Fconversations%2Fstream'%3B%7D)()%3B`
+- ♥ly Conversational: PROD: `javascript:(function()%7Bwindow.C.API_URL%20%3D%20'https%3A%2F%2Fwebsite-api.prod.ls-lab.lovelysystems.com%2Fconversations%2Fstream'%3B%7D)()%3B`
 
 ## Notes
 
