@@ -4,6 +4,7 @@ type: feat
 status: active
 date: 2026-06-30
 ticket: https://lovely.myjetbrains.com/youtrack/issue/LS-1460
+origin: docs/brainstorms/2026-06-30-website-minor-changes-brainstorm.md
 ---
 
 # Website minor changes: ♥Streaming button + smaller answer text
@@ -77,7 +78,10 @@ inside the section) to 16px — desirable, keeps it consistent with the answer s
 
 ## Sources
 
-- Ticket: [LS-1460](https://lovely.myjetbrains.com/youtrack/issue/LS-1460)
+- **Origin brainstorm:** [docs/brainstorms/2026-06-30-website-minor-changes-brainstorm.md](../brainstorms/2026-06-30-website-minor-changes-brainstorm.md)
+  — carried-forward decisions: answers at 16px on all breakpoints; button is text-only
+  pill (no icon); intro and question chip sizes unchanged; no JS changes.
+- Ticket: [LS-1460](https://lovely.myjetbrains.com/youtrack/issue/LS-1460) / GitHub issue #6
 - Figma (button): node `55-508` — confirms typed Inter SemiBold, no icon
 - Figma (sizes): node `53-281`
 - Button styles: [index.html:205](../../index.html)
