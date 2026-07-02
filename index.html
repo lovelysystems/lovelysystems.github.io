@@ -96,8 +96,11 @@
     }
 
     /* answers (rendered inside a section) are smaller than the intro and the
-       question chip, so longer replies read comfortably, especially on mobile */
-    section .ai-message {
+       question chip, so longer replies read comfortably, especially on mobile.
+       marked wraps answer text in <p> children, which would otherwise pick up
+       the global `p` rule above (64px) — so size those paragraphs too. */
+    section .ai-message,
+    section .ai-message p {
       font-size: 16px;
     }
 

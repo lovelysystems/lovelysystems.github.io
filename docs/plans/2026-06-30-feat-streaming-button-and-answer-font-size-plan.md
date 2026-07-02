@@ -60,10 +60,18 @@ Insert between the contact-details button and the GitHub `<a>` (current lines 26
 Add one rule inside the `<style>` block (near the `.message` rules, after `p {}`):
 
 ```css
-section .ai-message {
+section .ai-message,
+section .ai-message p {
   font-size: 16px;
 }
 ```
+
+`marked.parse()` ([index.html:422](../../index.html)) renders answers as HTML into
+`.ai-message`, wrapping text in child `<p>` elements. Those children match the global
+`p { font-size: var(--font-size) }` rule (64px) — inheritance from the 16px container
+does **not** win over a directly-matching rule — so the paragraphs must be targeted
+explicitly. Lists/headings emitted by marked have no competing rule and inherit the
+16px container size correctly.
 
 This also shrinks the `.dot-animation` typing indicator (also an `.ai-message`
 inside the section) to 16px — desirable, keeps it consistent with the answer size.
