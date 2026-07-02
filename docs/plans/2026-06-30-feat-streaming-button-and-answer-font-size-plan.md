@@ -1,7 +1,7 @@
 ---
 title: "Website minor changes: ♥Streaming button + smaller answer text"
 type: feat
-status: active
+status: completed
 date: 2026-06-30
 ticket: https://lovely.myjetbrains.com/youtrack/issue/LS-1460
 origin: docs/brainstorms/2026-06-30-website-minor-changes-brainstorm.md
@@ -15,17 +15,17 @@ Figma `55-508` confirmed the button is plain Inter SemiBold text ("just type it"
 
 ## Acceptance Criteria
 
-- [ ] A `♥Streaming` pill button sits in `#predefined-prompts`, **between** the
+- [x] A `♥Streaming` pill button sits in `#predefined-prompts`, **between** the
       "I need your contact details..." button and the GitHub link.
-- [ ] It links to `https://www.lovelystreaming.com/`, opens in a new tab
+- [x] It links to `https://www.lovelystreaming.com/`, opens in a new tab
       (`target="_blank" rel="noopener noreferrer"`), and is visually identical to
       the existing GitHub/LinkedIn pills (no SVG icon — text only).
-- [ ] The `♥` renders as a heart, matching the `♥lovely` intro treatment.
-- [ ] After a question is asked, the answer text renders at **16px** on all
+- [x] The `♥` renders as a heart, matching the `♥lovely` intro treatment.
+- [x] After a question is asked, the answer text renders at **16px** on all
       breakpoints.
-- [ ] The intro `.ai-message` stays at `var(--font-size)` (64px desktop / 32px
+- [x] The intro `.ai-message` stays at `var(--font-size)` (64px desktop / 32px
       mobile) — unchanged.
-- [ ] The question chip (`.user-message-text`) stays at 20px — unchanged.
+- [x] The question chip (`.user-message-text`) stays at 20px — unchanged.
 
 ## Context
 
