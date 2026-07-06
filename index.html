@@ -95,6 +95,22 @@
       /* 0.5 as per the design is too low */
     }
 
+    /* answers (rendered inside a section) are smaller than the intro and the
+       question chip, so longer replies read comfortably, especially on mobile.
+       marked wraps answer text in <p> children, which would otherwise pick up
+       the global `p` rule above (64px) — so size those paragraphs too. */
+    section .ai-message,
+    section .ai-message p {
+      font-size: 18px;
+    }
+
+    @media screen and (min-width: 768px) {
+      section .ai-message,
+      section .ai-message p {
+        font-size: 20px;
+      }
+    }
+
     .user-message {
       padding-block: var(--padding);
       position: sticky;
@@ -267,6 +283,7 @@
     <div id="predefined-prompts">
       <button data-prompt="Are you open for business?">Are you open for business?</button>
       <button data-prompt="">I need your contact details...</button>
+      <a class="button" href="https://www.lovelystreaming.com/" target="_blank" rel="noopener noreferrer">♥Streaming</a>
       <a class="button" href="https://github.com/lovelysystems" target="_blank" rel="noopener noreferrer">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" viewBox="0 0 496 512">
           <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
