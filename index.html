@@ -101,7 +101,14 @@
        the global `p` rule above (64px) — so size those paragraphs too. */
     section .ai-message,
     section .ai-message p {
-      font-size: 16px;
+      font-size: 18px;
+    }
+
+    @media screen and (min-width: 768px) {
+      section .ai-message,
+      section .ai-message p {
+        font-size: 20px;
+      }
     }
 
     .user-message {
